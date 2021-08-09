@@ -1,27 +1,40 @@
-h1 {
-margin-left: 40px;
+html {
+    text-align: center;
+}
 
+h1 {
+margin-left: 350px;
+background-color: blueviolet;
+width: 600px;
 }
 h2 {
  margin-left: 40px;   
 }
+h3 {
+margin-top: 400px;
+margin-bottom: 300px;
+}
 body {
+text-align: center;
 border-color: cornflowerblue;
 border-width: 50px;
-border-style: solid;
+border-style: groove;
 width: 1300px;
 height: 600px;
+margin-left: 100px;
 }
 img {
-margin-top: 60px;
-max-width: 250px;
-max-height: 300px;
+margin-top: 20px;
+width: 250px;
+height: 23git0px;
+border-style: solid;
+border-color: darkblue;
 
 }
 
 #left_catalog_item {
     float: left;
-    margin-left: 50px;
+    margin-left: 180px;
     margin-right: 50px;
 }
 

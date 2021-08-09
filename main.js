@@ -48,7 +48,7 @@ new CatalogItem('Wine-glass', 'assets/wine-glass.jpg')
 
 // Set up our element references in the DOM
 const catalogHeader = document.getElementById('catalogHeader')
-const catalogItemImageSectionTab = document.getElementById('all_items')
+const catalogItemImageSectionTag = document.getElementById('all_items')
 const finalScores = document.getElementById('finalScores')
 const leftCatalogItemImageName = document.getElementById('left_catalog_item_name')
 const leftCatalogItemImageTag = document.getElementById('left_catalog_item_img')
@@ -77,8 +77,76 @@ let pickNewItems = function() {
     // Update right 
     rightCatalogItemImageName.innerText = allCatalogItemImageObjects[rightCatalogItemIndex].name;
     rightCatalogItemImageTag.src = allCatalogItemImageObjects[rightCatalogItemIndex].imageSrc;
+
+    // Update the 3 displayed
+    leftPageItem = allCatalogItemImageObjects[leftCatalogItemIndex];
+    middlePageItem = allCatalogItemImageObjects[middleCatalogItemIndex];
+    rightPageItem = allCatalogItemImageObjects[rightCatalogItemIndex];
+}
+
+// Handle clicks on the items
+// Get which item clicked on from the event target
+const handleClickOnItem = function (evt) {
+console.log(`You clicked this target element id ${evt.target.id}`);
+// if they can still click, do clicky things
+if (totalClicks < MAX_CLICKS_ALLOWED) {
+
+    const thingWeClickedOn = evt.target;
+    const id = thingWeClickedOn.id;
+
+    // Mark that they were shown
+    leftPageItem.timesShown++; 
+    middlePageItem.timesShown++;
+    rightPageItem.timesShown++;
+
+    console.log(`Left item ${leftPageItem.name} has been shown ${leftPageItem.timesShown} , the middle item ${middlePageItem.name} has been shown ${middlePageItem.timesShown}, and the right item ${rightPageItem.name} has been shown ${rightPageItem.timesShown} so far.`);
+
+    // Check which was clicked and update counter
+    if (id === 'left_catalog_item_img' || id === 'middle_catalog_item_img' || id === 'right_catalog_item_img') {
+        // track the items
+
+            if (id === 'left_catalog_item_img') { // clicked on the left image
+            leftPageItem.clicks++;
+            console.log(`Left item ${leftPageItem.name} has ${leftPageItem.clicks} so far`);
+            }
+    
+            if (id === 'middle_catalog_item_img') { // clicked on the middle image
+            middlePageItem.clicks++;
+            console.log(`Middle item ${middlePageItem.name} has ${middlePageItem.clicks} so far`);     
+            }
+
+            if (id === 'right_catalog_item_img') { // clicked on the right image
+                rightPageItem.clicks++;
+                console.log(`Right item ${rightPageItem.name} has ${rightPageItem.clicks} so far`);
+             }
+
+            // after we update the old, pick new pictures
+            pickNewItems();
+        }
+
+    }
+    // increment amount of clicks
+    totalClicks++
+    // when they reach total max clicks, remove the clicky function
+    if (totalClicks === MAX_CLICKS_ALLOWED) {
+        catalogItemImageSectionTag.removeEventListener('click', handleClickOnItem); //housekeeping
+        console.log('You picked 25 items, thanks!');
+        alert('You picked 25 items, thanks!');
+
+        // display the clicks to the page
+        for (let index = 0; index > allCatalogItemImageObjects.length; index++) {
+            // Probably can do this on one line with dot notation/nesting
+            let newLiScore = document.createElement('li');
+            newLiScore.innerText = `${allCatalogItemImageObjects[index].name}: ${allCatalogItemImageObjects[index].clicks}`;
+            finalScores.appendChild(newLiScore); // Add score
+
+        }
+    }
 }
 
 // POE
+// Set the listener at the divider level that contains both images
+// Events bubble up!!
 
+catalogItemImageSectionTag.addEventListener('click', handleClickOnItem);
 pickNewItems();

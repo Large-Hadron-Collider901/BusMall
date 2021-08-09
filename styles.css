@@ -1,0 +1,42 @@
+h1 {
+margin-left: 40px;
+
+}
+h2 {
+ margin-left: 40px;   
+}
+body {
+border-color: cornflowerblue;
+border-width: 50px;
+border-style: solid;
+width: 1300px;
+height: 600px;
+}
+img {
+margin-top: 60px;
+max-width: 250px;
+max-height: 300px;
+
+}
+
+#left_catalog_item {
+    float: left;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+#middle_catalog_item {
+    float: left;
+    margin-right: 50px;
+    margin-left: 50px;
+}
+
+#right_catalog_item {
+    float: left;
+    margin-right: 50px;
+    margin-left: 50px;
+}
+
+aside {
+float: bottom;
+}

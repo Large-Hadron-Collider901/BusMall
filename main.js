@@ -56,7 +56,9 @@ const middleCatalogItemImageName = document.getElementById('middle_catalog_item_
 const middleCatalogItemImageTag = document.getElementById('middle_catalog_item_img')
 const rightCatalogItemImageName = document.getElementById('right_catalog_item_name')
 const rightCatalogItemImageTag = document.getElementById('right_catalog_item_img')
-
+const aside = document.getElementById('aside')
+const myButton = document.createElement("button")
+myButton.innerText="View Results"
 // Implement a function to pick 3 random items
 let pickNewItems = function() {
     // randomly pick the left object/item from our list of items
@@ -66,6 +68,11 @@ let pickNewItems = function() {
     // randomly pick the right object/item from our list of items
     // TO DO: In the final version we should check to make sure we dont display the same image
     rightCatalogItemIndex = Math.floor(Math.random() * allCatalogItemImageObjects.length);
+    while (leftCatalogItemIndex === middleCatalogItemIndex || leftCatalogItemIndex === rightCatalogItemIndex || middleCatalogItemIndex === rightCatalogItemIndex) {
+        leftCatalogItemIndex = Math.floor(Math.random() * allCatalogItemImageObjects.length);
+        middleCatalogItemIndex = Math.floor(Math.random() * allCatalogItemImageObjects.length); 
+        rightCatalogItemIndex = Math.floor(Math.random() * allCatalogItemImageObjects.length);  
+    }
     // Keep up with the 3 instances of catalog item objects that got picked randomly (so we can update view and click count)
     // Render on page at the targeted sections of the page
     // Update left
@@ -126,22 +133,43 @@ if (totalClicks < MAX_CLICKS_ALLOWED) {
 
     }
     // increment amount of clicks
-    totalClicks++
-    // when they reach total max clicks, remove the clicky function
+    totalClicks++ 
     if (totalClicks === MAX_CLICKS_ALLOWED) {
         catalogItemImageSectionTag.removeEventListener('click', handleClickOnItem); //housekeeping
         console.log('You picked 25 items, thanks!');
         alert('You picked 25 items, thanks!');
-
+    aside.append(myButton);
+    myButton.addEventListener("click", function(e){
+      // when they reach total max clicks, remove the clicky function
+  
+        
         // display the clicks to the page
-        for (let index = 0; index > allCatalogItemImageObjects.length; index++) {
+        for (let index = 0; index < allCatalogItemImageObjects.length; index++) {
             // Probably can do this on one line with dot notation/nesting
             let newLiScore = document.createElement('li');
-            newLiScore.innerText = `${allCatalogItemImageObjects[index].name}: ${allCatalogItemImageObjects[index].clicks}`;
+            newLiScore.innerText = `${allCatalogItemImageObjects[index].name} has ${allCatalogItemImageObjects[index].clicks}`;
             finalScores.appendChild(newLiScore); // Add score
+        
 
         }
-    }
+        
+    }) 
+}
+    // when they reach total max clicks, remove the clicky function
+    // if (totalClicks === MAX_CLICKS_ALLOWED) {
+        // catalogItemImageSectionTag.removeEventListener('click', handleClickOnItem); //housekeeping
+        // console.log('You picked 25 items, thanks!');
+        // alert('You picked 25 items, thanks!');
+        
+        // // display the clicks to the page
+        // for (let index = 0; index > allCatalogItemImageObjects.length; index++) {
+        //     // Probably can do this on one line with dot notation/nesting
+        //     let newLiScore = document.createElement('li');
+        //     newLiScore.innerText = `${allCatalogItemImageObjects[index].name} has ${allCatalogItemImageObjects[index].clicks}`;
+        //     finalScores.appendChild(newLiScore); // Add score
+
+        // }
+   // }
 }
 
 // POE

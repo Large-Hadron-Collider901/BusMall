@@ -20,7 +20,7 @@ let middlePageItem = null;
 let rightPageItem = null;
 let totalClicks = 0;
 const MAX_CLICKS_ALLOWED = 25;
-// We will randomly pull from a list of bussmall catalog image objects and display them
+// We will randomly pull from a list of busmall catalog image objects and display them
 // First I need them in a list/array.
 let allCatalogItemImageObjects = [
   new CatalogItem("Bag", "assets/bag.jpg"),
@@ -184,6 +184,7 @@ const handleClickOnItem = function (evt) {
     catalogItemImageSectionTag.removeEventListener("click", handleClickOnItem); //housekeeping
     console.log("You picked 25 items, thanks!");
     alert("You picked 25 items, thanks!");
+    // add button to show results for how many times an image was clicked
     aside.append(myButton);
     myButton.addEventListener("click", function (e) {
       // when they reach total max clicks, remove the clicky function

@@ -20,7 +20,7 @@ let middlePageItem = null;
 let rightPageItem = null;
 let totalClicks = 0;
 const MAX_CLICKS_ALLOWED = 25;
-// We will randomly pull from a list of busmall catalog image objects and display them
+// We will randomly pull from a list of bus mall catalog image objects and display them
 // First I need them in a list/array.
 let allCatalogItemImageObjects = [
   new CatalogItem("Bag", "assets/bag.jpg"),
@@ -32,7 +32,6 @@ let allCatalogItemImageObjects = [
   new CatalogItem("Cthulhu", "assets/cthulhu.jpg"),
   new CatalogItem("Dog duck", "assets/dog-duck.jpg"),
   new CatalogItem("Dragon", "assets/dragon.jpg"),
-  new CatalogItem("Hat", "assets/hat.jpg"),
   new CatalogItem("Masonic bible", "assets/masonic-bible.jpg"),
   new CatalogItem("Pen", "assets/pen.jpg"),
   new CatalogItem("Pet sweep", "assets/pet-sweep.jpg"),
@@ -137,7 +136,8 @@ const handleClickOnItem = function (evt) {
     leftPageItem.timesShown++;
     middlePageItem.timesShown++;
     rightPageItem.timesShown++;
-
+    // Update click header status and log (+1 because we started at 0)
+    catalogHeader.innerText = `Choose your favorite item out of the three displayed: You have clicked on ${totalClicks+1} items out of a max of ${MAX_CLICKS_ALLOWED}`
     console.log(
       `Left item ${leftPageItem.name} has been shown ${leftPageItem.timesShown} , the middle item ${middlePageItem.name} has been shown ${middlePageItem.timesShown}, and the right item ${rightPageItem.name} has been shown ${rightPageItem.timesShown} so far.`
     );

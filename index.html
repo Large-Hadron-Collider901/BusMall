@@ -9,13 +9,14 @@
     <title>Bus Mall Project</title>
 </head>
 <body>
+<main>
 <h1>BusMall Catalog</h1>
 <header id="catalogHeader">
-Choose your favorite item out of the three displayed:
+
 </header>
 <!-- This section is where we will randomly display 3 catalog item image objects  -->
 <section id="all_items">
-<h2>Select an Item!</h2>
+<h2>Select your favorite item from the three below!</h2>
 <div id="left_catalog_item">
     <img id="left_catalog_item_img" src="" alt="The left catalog item image"/>
     <p id="left_catalog_item_name"></p>
@@ -33,16 +34,22 @@ Choose your favorite item out of the three displayed:
 
 <aside id="aside">
     <ol id="finalScores">
-        <h3>Final Scores</h3>
+        <h3>Final Scores:</h3>
     </ol>
 </aside>
-<div>
-    <canvas id="myChart"></canvas>
+
+<div id="my-chart">
+    <canvas id="myChart" width="600px" height="400px"></canvas>
 </div>
+
+
+
+
 
 
 
 <!-- Link to our javascript -->
 <script src="main.js"></script>    
+</main>
 </body>
 </html>

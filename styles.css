@@ -1,35 +1,47 @@
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Handlee&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Eczar&display=swap');
 html {
     text-align: center;
+    margin-left: 80px;
 }
 
+main {
+    background-color: rgb(203, 205, 236);
+    width: 1300px;
+    height: 900px;
+    padding-top: 10px;
+}
+#catalogHeader {
+font-family: 'Handlee', cursive;  
+
+}
 h1 {
 margin-left: 350px;
 background-color: blueviolet;
 width: 600px;
 font-family: 'Lobster', cursive;
+font-size: 40px;
 }
-h2 {
- margin-left: 40px;   
+h2, h3 {
+ 
+ font-family: 'Handlee', cursive;  
+ font-size: 30px; 
 }
-h3 {
-margin-top: 400px;
 
-}
 body {
 text-align: center;
 border-color: cornflowerblue;
 border-width: 50px;
 border-style: groove;
 width: 1300px;
-height: 1000px;
-margin-left: 100px;
+height: 900px;
+
 }
 img {
-margin-top: 20px;
-width: 249px;
-height: 230px;
+margin-top: 0px;
+width: 265px;
+height: 200px;
 border-style: solid;
 border-color: darkblue;
 
@@ -37,24 +49,41 @@ border-color: darkblue;
 
 #left_catalog_item {
     float: left;
-    margin-left: 180px;
+    margin-left: 160px;
     margin-right: 50px;
 }
 
 #middle_catalog_item {
     float: left;
     margin-right: 50px;
-    margin-left: 50px;
+  
 }
 
 #right_catalog_item {
     float: left;
-    margin-right: 50px;
-    margin-left: 50px;
+    margin-right: 20px;
+    
 }
 
 aside {
-    text-align: left;
-    margin-left: 580px;
+margin-top: 50px;
+margin-bottom: 50px;   
+margin-right: 3px;
+text-align: left;
+
+    
+}
+
+#my-chart {
+   
+display: inline-block;
+text-align: center;
+margin-top: -10px;
+margin-right: 200px;
+margin-left: 90px;
+
 
 }
+
+
+

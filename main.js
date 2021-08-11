@@ -1,28 +1,92 @@
-//console.log("Hello-World") Sanity test
 
-// Define classes/instantiate clickable classes/add event handler to track clicks
+const itemContainer = document.querySelector("#all_items");
+const aside = document.querySelector("aside");
+// add button to show results for how many times an image was clicked
+const myButton = document.createElement("button");
+myButton.textContent = "View Results";
+const ctx = document.querySelector("#myChart").getContext("2d");
+// Add variables we need in multiple places
+const maxClicksAllowed = 5;
+let totalClicks = 0;
+let leftCatalogItem = null;
+let middleCatalogItem = null;
+let rightCatalogItem = null;
 
+const barChart = {
+ type: "bar",
+  data: {
+    labels: [],
+    datasets: [
+      {
+        label: "# of votes",
+        data: [],
+        backgroundColor: "rgba(255, 151, 23, 1)",
+      },
+      {
+        label: "times shown",
+        data: [],
+        backgroundColor: "rgba(121, 33, 184, 1)",
+      },
+    ],
+  },
+  options: {
+    responsive: false,
+    scales: {
+      y: {
+        suggestedMin: 0,
+        suggestedMax: maxClicksAllowed,
+      },
+    },
+    plugins: {
+      legend: {
+        labels: {
+          font: {
+            family: "Eczar",
+          },
+        },
+      },
+    },
+  },
+};
+
+// Helper functions
+const randomize = (arr) => {
+  return Math.floor(Math.random() * arr.length);
+};
+
+const determinePlural = (num, string) => {
+  if (num === 1) return `${num} ${string.slice(0, -1)}`;
+  return `${num} ${string}`;
+};
+
+const listResults = () => {
+  const catalogHeader = document.getElementById("catalogHeader");
+
+  for (const item of catalogItems) {
+    barChart.data.labels.push(item.name);
+    barChart.data.datasets[0].data.push(item.clicks);
+    barChart.data.datasets[1].data.push(item.timesShown);
+  }
+  //aside.append(catalogHeader);
+  myButton.removeEventListener("click", listResults);
+  const resultsChart = new Chart(ctx, barChart);
+};
+
+//Define classes/instantiate clickable classes/add event handler to track clicks
 // Define base set of properties for our object domain
-
 class CatalogItem {
   // Properties that I want but not passed in
-  clicks = 0; // how many times the catalog item gets clicked
-  timesShown = 0; // percentage of times an item was clicked on when it was shown
+  timesShown = 0;
+  clicks = 0;
   // Initial constructor (MUST BE NAMED CONSTRUCTOR)
-  constructor(name, imageSrc) {
+  constructor(name, imgSrc) {
     this.name = name; // image name
-    this.imageSrc = imageSrc; // src href to image
+    this.imgSrc = imgSrc; // src href to image
   }
 }
-// Add variables we need in multiple places
-let leftPageItem = null;
-let middlePageItem = null;
-let rightPageItem = null;
-let totalClicks = 0;
-const MAX_CLICKS_ALLOWED = 25;
 // We will randomly pull from a list of bus mall catalog image objects and display them
 // First I need them in a list/array.
-let allCatalogItemImageObjects = [
+const catalogItems = [
   new CatalogItem("Bag", "assets/bag.jpg"),
   new CatalogItem("Banana", "assets/banana.jpg"),
   new CatalogItem("Bathroom", "assets/bathroom.jpg"),
@@ -44,180 +108,137 @@ let allCatalogItemImageObjects = [
   new CatalogItem("Wine-glass", "assets/wine-glass.jpg"),
 ];
 
-// Set up our element references in the DOM
-const catalogHeader = document.getElementById("catalogHeader");
-const catalogItemImageSectionTag = document.getElementById("all_items");
-const finalScores = document.getElementById("finalScores");
-const leftCatalogItemImageName = document.getElementById(
-  "left_catalog_item_name"
-);
-const leftCatalogItemImageTag = document.getElementById(
-  "left_catalog_item_img"
-);
-const middleCatalogItemImageName = document.getElementById(
-  "middle_catalog_item_name"
-);
-const middleCatalogItemImageTag = document.getElementById(
-  "middle_catalog_item_img"
-);
-const rightCatalogItemImageName = document.getElementById(
-  "right_catalog_item_name"
-);
-const rightCatalogItemImageTag = document.getElementById(
-  "right_catalog_item_img"
-);
-const aside = document.getElementById("aside");
-const myButton = document.createElement("button");
-myButton.innerText = "View Results";
-// Implement a function to pick 3 random items
-let pickNewItems = function () {
-  // randomly pick the left object/item from our list of items
-  leftCatalogItemIndex = Math.floor(
-    Math.random() * allCatalogItemImageObjects.length
-  ); // classic random pattern with a max
-  // randomly pick the middle object/item from our list of items
-  middleCatalogItemIndex = Math.floor(
-    Math.random() * allCatalogItemImageObjects.length
-  );
-  // randomly pick the right object/item from our list of items
-  // TO DO: In the final version we should check to make sure we dont display the same image
-  rightCatalogItemIndex = Math.floor(
-    Math.random() * allCatalogItemImageObjects.length
-  );
-  while (
-    leftCatalogItemIndex === middleCatalogItemIndex ||
-    leftCatalogItemIndex === rightCatalogItemIndex ||
-    middleCatalogItemIndex === rightCatalogItemIndex
-  ) {
-    leftCatalogItemIndex = Math.floor(
-      Math.random() * allCatalogItemImageObjects.length
-    );
-    middleCatalogItemIndex = Math.floor(
-      Math.random() * allCatalogItemImageObjects.length
-    );
-    rightCatalogItemIndex = Math.floor(
-      Math.random() * allCatalogItemImageObjects.length
-    );
-  }
-  // Keep up with the 3 instances of catalog item objects that got picked randomly (so we can update view and click count)
-  // Render on page at the targeted sections of the page
-  // Update left
-  leftCatalogItemImageName.innerText =
-    allCatalogItemImageObjects[leftCatalogItemIndex].name;
-  leftCatalogItemImageTag.src =
-    allCatalogItemImageObjects[leftCatalogItemIndex].imageSrc;
-  // Update middle
-  middleCatalogItemImageName.innerText =
-    allCatalogItemImageObjects[middleCatalogItemIndex].name;
-  middleCatalogItemImageTag.src =
-    allCatalogItemImageObjects[middleCatalogItemIndex].imageSrc;
-  // Update right
-  rightCatalogItemImageName.innerText =
-    allCatalogItemImageObjects[rightCatalogItemIndex].name;
-  rightCatalogItemImageTag.src =
-    allCatalogItemImageObjects[rightCatalogItemIndex].imageSrc;
+// function that sets items for three main divs
+const selectPreferredItem = () => {
+  // select dom elements
+  const leftItemImg = document.querySelector("#left_catalog_item_img");
+  const middleItemImg = document.querySelector("#middle_catalog_item_img");
+  const rightItemImg = document.querySelector("#right_catalog_item_img");
+  const leftItemName = document.querySelector("#left_catalog_item_name");
+  const middleItemName = document.querySelector("#middle_catalog_item_name");
+  const rightItemName = document.querySelector("#right_catalog_item_name");
 
-  // Update the 3 displayed
-  leftPageItem = allCatalogItemImageObjects[leftCatalogItemIndex];
-  middlePageItem = allCatalogItemImageObjects[middleCatalogItemIndex];
-  rightPageItem = allCatalogItemImageObjects[rightCatalogItemIndex];
+  // get random number that'll be used to get random CatalogItem
+  let leftIndex = randomize(catalogItems);
+  let middleIndex = randomize(catalogItems);
+  let rightIndex = randomize(catalogItems);
+
+  // check for duplicate indices
+  let leftMiddle = leftIndex === middleIndex;
+  let rightLeft = rightIndex === leftIndex;
+  let middleRight = middleIndex === rightIndex;
+
+  while (leftMiddle || rightLeft || middleRight) {
+    if (leftMiddle) {
+      leftIndex = randomize(catalogItems);
+    } else if (rightLeft) {
+      rightIndex = randomize(catalogItems);
+    } else if (middleRight) {
+      middleIndex = randomize(catalogItems);
+    }
+    leftMiddle = leftIndex === middleIndex;
+    rightLeft = rightIndex === leftIndex;
+    middleRight = middleIndex === rightIndex;
+  }
+
+  // Use random indices to get random catalog item
+  leftCatalogItem = catalogItems[leftIndex];
+  middleCatalogItem = catalogItems[middleIndex];
+  rightCatalogItem = catalogItems[rightIndex];
+
+  // Set up our element references in the DOM
+  leftItemName.textContent = leftCatalogItem.name;
+  middleItemName.textContent = middleCatalogItem.name;
+  rightItemName.textContent = rightCatalogItem.name;
+
+  leftItemImg.src = leftCatalogItem.imgSrc;
+  middleItemImg.src = middleCatalogItem.imgSrc;
+  rightItemImg.src = rightCatalogItem.imgSrc;
 };
 
 // Handle clicks on the items
 // Get which item clicked on from the event target
-const handleClickOnItem = function (evt) {
-  console.log(`You clicked this target element id ${evt.target.id}`);
+const handleClickOnItem = (e) => {
+  console.log(`You clicked this target element id ${e.target.id}`);
+  
   // if they can still click, do clicky things
-  if (totalClicks < MAX_CLICKS_ALLOWED) {
-    const thingWeClickedOn = evt.target;
-    const id = thingWeClickedOn.id;
+  if (totalClicks < maxClicksAllowed) {
+    const itemId = e.target.id;
 
-    // Mark that they were shown
-    leftPageItem.timesShown++;
-    middlePageItem.timesShown++;
-    rightPageItem.timesShown++;
-    // Update click header status and log (+1 because we started at 0)
-    catalogHeader.innerText = `Choose your favorite item out of the three displayed: You have clicked on ${totalClicks+1} items out of a max of ${MAX_CLICKS_ALLOWED}`
-    console.log(
-      `Left item ${leftPageItem.name} has been shown ${leftPageItem.timesShown} , the middle item ${middlePageItem.name} has been shown ${middlePageItem.timesShown}, and the right item ${rightPageItem.name} has been shown ${rightPageItem.timesShown} so far.`
-    );
+    const idOptions = [
+      "left_catalog_item_img",
+      "middle_catalog_item_img",
+      "right_catalog_item_img",
+    ];
 
-    // Check which was clicked and update counter
-    if (
-      id === "left_catalog_item_img" ||
-      id === "middle_catalog_item_img" ||
-      id === "right_catalog_item_img"
-    ) {
-      // track the items
+    // If catalog item image is clicked
+    if (idOptions.includes(itemId)) {
+      // Mark that they were shown
+      leftCatalogItem.timesShown++;
+      middleCatalogItem.timesShown++;
+      rightCatalogItem.timesShown++;
+      // Update click header status and log (+1 because we started at zero)
+      catalogHeader.innerText = `You have clicked on ${totalClicks+1} items, out of the total ${maxClicksAllowed}`;
 
-      if (id === "left_catalog_item_img") {
-        // clicked on the left image
-        leftPageItem.clicks++;
+      // If left item was clicked
+      if (idOptions.indexOf(itemId) === 0) {
+        leftCatalogItem.clicks++; 
         console.log(
-          `Left item ${leftPageItem.name} has ${leftPageItem.clicks} so far`
+          `Left item ${leftCatalogItem.name} has ${determinePlural(
+            leftCatalogItem.clicks,
+            "clicks"
+          )} so far`
+        );
+        // If middle item was clicked
+      } else if (idOptions.indexOf(itemId) === 1) {
+        middleCatalogItem.clicks++;
+        console.log(
+          `Middle item ${middleCatalogItem.name} has ${determinePlural(
+            middleCatalogItem.clicks,
+            "clicks"
+          )} so far`
+        );
+        // If right item was clicked
+      } else {
+        rightCatalogItem.clicks++; 
+        console.log(
+          `Right item ${rightCatalogItem.name} has ${determinePlural(
+            rightCatalogItem.clicks,
+            "clicks"
+          )} so far`
         );
       }
-
-      if (id === "middle_catalog_item_img") {
-        // clicked on the middle image
-        middlePageItem.clicks++;
-        console.log(
-          `Middle item ${middlePageItem.name} has ${middlePageItem.clicks} so far`
-        );
-      }
-
-      if (id === "right_catalog_item_img") {
-        // clicked on the right image
-        rightPageItem.clicks++;
-        console.log(
-          `Right item ${rightPageItem.name} has ${rightPageItem.clicks} so far`
-        );
-      }
-
-      // after we update the old, pick new pictures
-      pickNewItems();
+      totalClicks++;
+      console.log(
+        `Left item ${leftCatalogItem.name} has been shown ${determinePlural(
+          leftCatalogItem.timesShown,
+          "times"
+        )}.\nMiddle item ${
+          middleCatalogItem.name
+        } has been shown ${determinePlural(
+          middleCatalogItem.timesShown,
+          "times"
+        )} times.\nRight item ${
+          rightCatalogItem.name
+        } has been shown ${determinePlural(
+          rightCatalogItem.timesShown,
+          "times"
+        )} times.`
+      );
+      if (totalClicks !== maxClicksAllowed) selectPreferredItem();
     }
   }
-  // increment amount of clicks
-  totalClicks++;
-  if (totalClicks === MAX_CLICKS_ALLOWED) {
-    catalogItemImageSectionTag.removeEventListener("click", handleClickOnItem); //housekeeping
-    console.log("You picked 25 items, thanks!");
-    alert("You picked 25 items, thanks!");
-    // add button to show results for how many times an image was clicked
+
+  if (totalClicks === maxClicksAllowed) {
+    itemContainer.removeEventListener("click", handleClickOnItem);
+    console.log(`You picked ${maxClicksAllowed} items, thanks!`);
+    alert(`You picked ${maxClicksAllowed} items, thanks!`);
+
     aside.append(myButton);
-    myButton.addEventListener("click", function (e) {
-      // when they reach total max clicks, remove the clicky function
 
-      // display the clicks to the page
-      for (let index = 0; index < allCatalogItemImageObjects.length; index++) {
-        // Probably can do this on one line with dot notation/nesting
-        let newLiScore = document.createElement("li");
-        newLiScore.innerText = `${allCatalogItemImageObjects[index].name} has ${allCatalogItemImageObjects[index].clicks}`;
-        finalScores.appendChild(newLiScore); // Add score
-      }
-    });
+   myButton.addEventListener("click", listResults);
   }
-  // when they reach total max clicks, remove the clicky function
-  // if (totalClicks === MAX_CLICKS_ALLOWED) {
-  // catalogItemImageSectionTag.removeEventListener('click', handleClickOnItem); //housekeeping
-  // console.log('You picked 25 items, thanks!');
-  // alert('You picked 25 items, thanks!');
-
-  // // display the clicks to the page
-  // for (let index = 0; index > allCatalogItemImageObjects.length; index++) {
-  //     // Probably can do this on one line with dot notation/nesting
-  //     let newLiScore = document.createElement('li');
-  //     newLiScore.innerText = `${allCatalogItemImageObjects[index].name} has ${allCatalogItemImageObjects[index].clicks}`;
-  //     finalScores.appendChild(newLiScore); // Add score
-
-  // }
-  // }
 };
 
-// POE
-// Set the listener at the divider level that contains both images
-// Events bubble up!!
-
-catalogItemImageSectionTag.addEventListener("click", handleClickOnItem);
-pickNewItems();
+itemContainer.addEventListener("click", handleClickOnItem);
+selectPreferredItem();

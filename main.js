@@ -127,7 +127,7 @@ const selectPreferredItem = () => {
   let leftMiddle = leftIndex === middleIndex;
   let rightLeft = rightIndex === leftIndex;
   let middleRight = middleIndex === rightIndex;
-
+  console.log(leftMiddle, rightLeft, middleRight);
   while (leftMiddle || rightLeft || middleRight) {
     if (leftMiddle) {
       leftIndex = randomize(catalogItems);

@@ -48,7 +48,7 @@ height: 900px;
 }
 img {
 margin-top: 0px;
-width: 240px;
+width: 260px;
 height: 230px;
 border-style: solid;
 border-color:darkblue;
@@ -57,7 +57,7 @@ border-color:darkblue;
 
 #left_catalog_item {
     float: left;
-    margin-left: 220px;
+    margin-left: 200px;
     margin-right: 50px;
 }
 

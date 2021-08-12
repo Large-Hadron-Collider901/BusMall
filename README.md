@@ -25,3 +25,7 @@ By: Skye McCullough
 * Using ChartJS (imported from CDN), display the vote totals and the number of times a product was viewed in a bar chart format.
 * Place the bar chart in the section located beneath your three product images
 * The bar charts should only appear after all voting data has been collected.
+
+## Lab 13 Requirements - Complete 
+* Implement local storage into your current application
+* Make sure the data persists across both browser refreshes and resets

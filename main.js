@@ -1,5 +1,5 @@
 
-const itemContainer = document.querySelector("#all_items");
+const itemContainer = document.querySelector("#all_items"); 
 const aside = document.querySelector("aside");
 // add button to show results for how many times an image was clicked
 const myButton = document.createElement("button");
@@ -62,7 +62,6 @@ const determinePlural = (num, string) => {
 };
 
 const listResults = () => {
-  updateLocalData();
   const catalogHeader = document.getElementById("catalogHeader");
 
   for (const item of catalogItems) {
@@ -178,7 +177,7 @@ const selectPreferredItem = () => {
     }
   }
 
-  // reassign previous indicies for next round
+  // reassign previous indices for next round
   prevLeft = leftIndex;
   prevMiddle = middleIndex;
   prevRight = rightIndex;
@@ -277,7 +276,7 @@ const handleClickOnItem = (e) => {
     alert(`You picked ${maxClicksAllowed} items, thanks!`);
     aside.append(myButton);
    myButton.addEventListener("click", listResults);
-  
+  updateLocalData();
   }
 };
 

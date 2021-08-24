@@ -1,6 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Handlee&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Eczar&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Shrikhand&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
 html {
     text-align: center;
     margin-left: 80px;
@@ -14,19 +17,24 @@ main {
     height: 900px;
     padding-top: 10px;
     background: linear-gradient(30deg, #007B82, pink,  #9ED8DB 40%, purple 70%);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 30px;
+    color: white;
+    text-shadow: #00222c 7px 7px 7px;
+
 }
 #catalogHeader {
 font-family: 'Handlee', cursive;  
 font-size: 20px;
 color: white;
-
 }
 h1 {  
-margin-left: 350px;
+margin-left: 205px;
 margin-top: 0px;
-width: 600px;
-font-family: 'Lobster', cursive;
-font-size: 90px;
+width: 900px;
+font-family: 'Shrikhand', cursive;
+text-shadow: #00222c 7px 7px 7px;
+font-size: 80px;
 color: white;
 }
 

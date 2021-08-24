@@ -1,7 +1,8 @@
 # **Busmall Project**
 By: Skye McCullough
 
-
+## About
+In this project, I create an app with a virtual catalog on behalf of BusMall that is intended for bus riders to use while they are taking their trip. To build this app, I used a variety of programming languages including HTML for the structure, CSS for styling, and JavaScript for interactive features. My BusMall project is an assignment in my code school curriculum where I utilize skills I have learned from the correlating lesson plan, which are shown in the requirements below.
 ## Lab 11 Requirements - Complete
 
 * Display three unique products by chance so that the viewers can pick a favorite.
